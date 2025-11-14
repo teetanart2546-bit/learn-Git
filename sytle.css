@@ -1,0 +1,124 @@
+/* sytle.css - Background color & simple theme styles */
+
+/* Theme variables */
+:root{
+    --bg: #f6fbff;            /* main page background */
+    --bg-alt: #ffffff;        /* cards / panels */
+    --accent: #0b84ff;        /* primary accent */
+    --muted: #eef6ff;         /* subtle backgrounds */
+    --text-on-bg: #0b2540;
+    --glass-alpha: rgba(255,255,255,0.6);
+}
+
+/* Dark theme support (toggle with data-theme="dark" on <html> or <body>) */
+[data-theme="dark"]{
+    --bg: #0b1220;
+    --bg-alt: #0f1724;
+    --accent: #4fb3ff;
+    --muted: #091125;
+    --text-on-bg: #e6f3ff;
+    --glass-alpha: rgba(10,14,20,0.5);
+}
+
+/* Respect user's system preference */
+@media (prefers-color-scheme: dark){
+    :root:not([data-theme]){
+        --bg: #0b1220;
+        --bg-alt: #0f1724;
+        --accent: #4fb3ff;
+        --muted: #091125;
+        --text-on-bg: #e6f3ff;
+        --glass-alpha: rgba(10,14,20,0.5);
+    }
+}
+
+/* Page background: layered gradient + subtle texture */
+body{
+    margin:0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--text-on-bg);
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.04) 0, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(0,0,0,0.03) 0, transparent 20%),
+        linear-gradient(180deg, var(--bg) 0%, var(--muted) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+}
+
+/* Full-bleed hero with stronger accent gradient */
+.hero{
+    padding: 6rem 1.5rem;
+    color: white;
+    background-image:
+        linear-gradient(135deg, rgba(11,132,255,0.92), rgba(79,179,255,0.9)),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    background-blend-mode: screen, normal;
+    text-align:center;
+}
+
+/* Alternate panels/cards */
+.panel{
+    background: var(--bg-alt);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(2,6,23,0.08);
+    padding: 1rem;
+}
+
+/* Glass card (uses backdrop-filter if available) */
+.card--glass{
+    background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.15));
+    background-color: var(--glass-alpha); /* fallback */
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Accent strips or sections */
+.strip{
+    padding: 1rem;
+    color: white;
+    background: linear-gradient(90deg, var(--accent), rgba(11,132,255,0.7));
+}
+
+/* Buttons with background styles */
+.btn{
+    display:inline-block;
+    padding: .5rem 1rem;
+    border-radius: 8px;
+    text-decoration:none;
+    color: white;
+    background: linear-gradient(180deg, var(--accent), #006ed6);
+    border: none;
+    cursor:pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,132,255,0.18); }
+.btn--ghost{
+    background: transparent;
+    color: var(--text-on-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow:none;
+}
+
+/* Small utility: muted background */
+.bg-muted{
+    background: var(--muted);
+    border-radius: 8px;
+    padding: .75rem;
+}
+
+/* Ensure good contrast on small components */
+footer, header{
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.02));
+    padding: 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width:720px){
+    .hero{ padding: 3.5rem 1rem; }
+    .panel{ padding: .75rem; }
+}
